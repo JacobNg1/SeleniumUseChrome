@@ -1,5 +1,10 @@
 方便使用chrome自动化脚本
 
+```commandline
+pip install git+https://github.com/JacobNg1/SeleniumUseChrome.git #以包的形式安装
+```
+
+
 
 #### webdriver下载地址
 ```commandline

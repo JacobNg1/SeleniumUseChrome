@@ -29,10 +29,10 @@ import selenium
 import subprocess
 import logging
 
-
+from use_opening_chrome import chrome_file
 
 ###***  先指定浏览器配置文件Chrome_file位置  ***###
-Chrome_file = r'../Chrome/AutomationProfile'
+CHROME_FILE_PATH = r'../Chrome/AutomationProfile'
 
 def remove_html_tags(text):
     clean = re.compile('<.*?>')
@@ -55,9 +55,10 @@ def use_opening_chrome(port):
 
 
 class ChromeWindows:
-    def __init__(self, port):
+    def __init__(self, port, config_file=CHROME_FILE_PATH):
         self.port = port
-        self.driver = self.start(self.port)
+        self.config_file = config_file
+        self.driver = self.start()
 
     @property
     def windows(self):
@@ -77,7 +78,7 @@ class ChromeWindows:
         return windows_info
 
 
-    def start(self, port, window_size={'width': 1200, 'height': 720}):
+    def start(self, window_size={'width': 1200, 'height': 720}):
         """
         用CMD打开chrome浏览器
         :param port: 使用的端口号
@@ -85,18 +86,18 @@ class ChromeWindows:
         """
         width, height = window_size['width'], window_size['height']
 
-        if selenium.webdriver.common.utils.is_connectable(port):
-            print(f'\033[32m端口号为\033[90m {port} \033[32m的Chrome Brower正在运行\033[0m')
+        if selenium.webdriver.common.utils.is_connectable(self.port):
+            print(f'\033[32m端口号为\033[90m {self.port} \033[32m的Chrome Brower正在运行\033[0m')
         else:
-            cmd = f'start chrome --remote-debugging-port={port} --user-data-dir={Chrome_file} --window-size={width},{height}'
+            cmd = f'start chrome --remote-debugging-port={self.port} --user-data-dir={self.config_file} --window-size={width},{height}'
             # os.popen(f'start chrome --remote-debugging-port={port} --user-data-dir={chrome_file} --window-size={width},{height}')
 
             subprocess.Popen(cmd, shell=True)
-            print(f'\033[32m成功开启端口号为 \033[90m{port}\033[32m 的Chrome Brower \033[0m')
+            print(f'\033[32m成功开启端口号为 \033[90m{self.port}\033[32m 的Chrome Brower \033[0m')
             print(f'\033[32m分辨率：\033[90m{width}*{height}\033[0m')
 
 
-        driver = use_opening_chrome(port)
+        driver = use_opening_chrome(self.port)
 
         return driver
 
