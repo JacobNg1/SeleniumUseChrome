@@ -10,3 +10,6 @@ authors = [
     { name = "Jacob", email = "jacob_ng@163.com" }
 ]
 dependencies = ["selenium", "webdriver_manager"]
+
+[tool.setuptools.packages.find]
+include = ["SeleniumUseChrome", "SeleniumUseChrome.*"]
