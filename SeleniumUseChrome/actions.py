@@ -20,16 +20,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import NoSuchWindowException
-# from selenium.webdriver.support import expected_conditions as EC
-from datetime import datetime
+
 import os, re, time, random
 import selenium
 import subprocess
-import logging
 
-from use_opening_chrome import chrome_file
 
 ###***  先指定浏览器配置文件Chrome_file位置  ***###
 CHROME_FILE_PATH = r'../Chrome/AutomationProfile'
