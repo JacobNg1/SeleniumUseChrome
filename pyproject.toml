@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "SeleniumUseChrome"
+version = "0.1.0"
+description = "A package to use Selenium with Chrome."
+authors = [
+    { name = "Jacob", email = "jacob_ng@163.com" }
+]
+dependencies = ["selenium", "webdriver_manager"]

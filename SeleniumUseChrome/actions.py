@@ -32,7 +32,7 @@ import logging
 
 
 ###***  先指定浏览器配置文件Chrome_file位置  ***###
-Chrome_file = r'.\Chrome\AutomationProfile'
+Chrome_file = r'../Chrome/AutomationProfile'
 
 def remove_html_tags(text):
     clean = re.compile('<.*?>')
@@ -159,7 +159,7 @@ class ChromeWindows:
         '''
         移除seLenium当中爬虫的特征,start后使用
         '''
-        f = open('Scripts/stealth.min.js', mode='r', encoding='utf-8').read()
+        f = open('../Scripts/stealth.min.js', mode='r', encoding='utf-8').read()
         self.driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {'source': f})
 
 
