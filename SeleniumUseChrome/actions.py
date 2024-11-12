@@ -34,26 +34,16 @@ def remove_html_tags(text):
     return re.sub(clean, '', text)
 
 
-def use_opening_chrome(port):
-    '''
-    使用已经在运行的chrome浏览器
-    :param port: 使用的端口号
-    '''
-    options = Options()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
 
-    options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
-    driver = webdriver.Chrome(options=options)
-    return driver
 
 
 class ChromeWindows:
     def __init__(self, port, config_file=CHROME_FILE_PATH):
         self.port = port
         self.config_file = config_file
-        self.driver = self.start()
+
+        self.is_runing = self.start()
+        self.driver = self.use_opening_chrome()
 
     @property
     def windows(self):
@@ -92,9 +82,24 @@ class ChromeWindows:
             print(f'\033[32m分辨率：\033[90m{width}*{height}\033[0m')
 
 
-        driver = use_opening_chrome(self.port)
+        driver = self.use_opening_chrome()
 
         return driver
+
+    def use_opening_chrome(self):
+        '''
+        使用已经在运行的chrome浏览器
+        :param port: 使用的端口号
+        '''
+        options = Options()
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-gpu")
+
+        options.add_experimental_option("debuggerAddress", f"127.0.0.1:{self.port}")
+        driver = webdriver.Chrome(options=options)
+        return driver
+
 
     def get_url(self, url, new_window=True):
         """
@@ -240,6 +245,8 @@ if __name__ == "__main__":
     win = ChromeWindows(port=1001)
     # print('window_handles',win.window_handles)
     print('windows',win.windows)
+    driver = win.driver
+    print(driver)
     # win.get_url('https://www.google.com')
     # # time.sleep(2)
     # print('windows',win.windows)
