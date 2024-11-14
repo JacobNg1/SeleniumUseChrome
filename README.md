@@ -20,3 +20,4 @@ http://chromedriver.storage.googleapis.com/index.html
 https://googlechromelabs.github.io/chrome-for-testing/#stable
 
 ```
+下载完成后放到webdriver路径或者放到python的script目录
