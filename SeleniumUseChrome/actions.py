@@ -25,14 +25,15 @@ import os, re, time, random
 import selenium
 import subprocess
 
+from selenium.webdriver.ie.service import Service
 
 ###***  先指定浏览器配置文件Chrome_file、driver位置  ***###
 FILE_PATH = os.path.abspath(__file__)
 
 CHROME_FILE_PATH = os.path.join(os.path.dirname(os.path.dirname(FILE_PATH)),
                                 'Chrome', 'AutomationProfile')
-CHROMEDRIVER_PATH = os.path.join(os.path.dirname(os.path.dirname(FILE_PATH)),
-                                 'webdriver', 'chromedriver-win64')
+CHROMEDRIVER = os.path.join(os.path.dirname(os.path.dirname(FILE_PATH)),
+                                 'webdriver', 'chromedriver-win64', 'chromedriver.exe')
 
 def remove_html_tags(text):
     clean = re.compile('<.*?>')
@@ -43,12 +44,12 @@ def remove_html_tags(text):
 
 
 class ChromeWindows:
-    def __init__(self, port, webdriver_path=CHROMEDRIVER_PATH, config_file=CHROME_FILE_PATH):
+    def __init__(self, port, chromedriver=CHROMEDRIVER, config_file=CHROME_FILE_PATH):
         self.port = port
         self.config_file = config_file
+        self.chromedriver = chromedriver
 
         self.is_runing = self.start()
-        self.chromedriver = CHROMEDRIVER_PATH
         self.driver = self.use_opening_chrome()
 
     @property
@@ -103,7 +104,8 @@ class ChromeWindows:
         options.add_argument("--disable-gpu")
 
         options.add_experimental_option("debuggerAddress", f"127.0.0.1:{self.port}")
-        driver = webdriver.Chrome(executable_path=self.chromedriver, options=options)
+        service = Service(self.chromedriver)
+        driver = webdriver.Chrome(service=service, options=options)
         return driver
 
 
