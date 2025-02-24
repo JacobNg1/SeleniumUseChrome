@@ -5,9 +5,15 @@
 ```commandline
 pip install git+https://github.com/JacobNg1/SeleniumUseChrome.git #以包的形式安装
 ```
-```commandline
+
+###示例代码
+
+```python
 from SeleniumUseChrome.actions import ChromeWindows, CHROME_FILE_PATH
 CHROME_FILE_PATH = r'../Chrome/AutomationProfile' #指定Chrome配置文件路径
+
+win = ChromeWindows(port=1001)
+win.start()
 ```
 
 
